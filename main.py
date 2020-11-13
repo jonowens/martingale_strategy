@@ -184,8 +184,7 @@ class MartingaleTrader(object):
                 target_value = (2 ** self.streak_count) * \
                                (self.base_bet / 100) * total_buying_power
                 if target_value > total_buying_power:
-                    # Limit the amount we can buy to a bit (1 share)
-                    # less than our total buying power
+                    # Limit the amount we can buy to a bit (1 share) less than our total buying power
                     target_value = total_buying_power - self.last_price
                 target_qty = int(target_value / self.last_price)
                 if self.streak_increasing:
@@ -209,19 +208,17 @@ class MartingaleTrader(object):
                 if self.position < 0:
                     buy_qty = min(abs(self.position), buy_qty)
                 print(f'Buying {buy_qty} shares.')
-                self.current_order = self.api.submit_order(
-                    self.symbol, buy_qty, 'buy',
-                    'limit', 'day', self.last_price
-                )
+                # Default
+                #self.current_order = self.api.submit_order(self.symbol, buy_qty, 'buy', 'limit', 'day', self.last_price)
+                self.current_order = self.api.submit_order(self.symbol, buy_qty, 'buy', 'market', 'day')
             elif delta < 0:
                 sell_qty = abs(delta)
                 if self.position > 0:
                     sell_qty = min(abs(self.position), sell_qty)
                 print(f'Selling {sell_qty} shares.')
-                self.current_order = self.api.submit_order(
-                    self.symbol, sell_qty, 'sell',
-                    'limit', 'day', self.last_price
-                )
+                # Default
+                #self.current_order = self.api.submit_order(self.symbol, sell_qty, 'sell', 'limit', 'day', self.last_price)
+                self.current_order = self.api.submit_order(self.symbol, sell_qty, 'sell', 'market', 'day')
         except Exception as e:
             print(e)
 
