@@ -28,8 +28,8 @@ def truncate(val, decimal_places):
 # price are likely to break, and increases its bet each time it is wrong.
 class MartingaleTrader(object):
     def __init__(self):
-        # API authentication keys can be taken from the Alpaca dashboard.
-        # https://app.alpaca.markets/paper/dashboard/overview
+        
+        # Initialize variables
         self.key_id = ALPACA_API_KEY
         self.secret_key = ALPACA_SECRET_KEY
         self.base_url = PAPER_BASE_URL
