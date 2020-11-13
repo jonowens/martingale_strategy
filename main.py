@@ -5,6 +5,7 @@ import alpaca_trade_api as tradeapi
 from dotenv import load_dotenv
 import os
 import datetime
+import asyncio
 
 # Initialization of Alpaca keys and paper trading url
 load_dotenv()
@@ -135,16 +136,16 @@ class MartingaleTrader(object):
                 return
 
             event_type = data.event
-            qty = int(data.order['filled_qty'])
-            side = data.order['side']
+            # API has changed and these may no longer be needed
+            # qty = int(data.order['filled_qty'])
+            # side = data.order['side']
             oid = data.order['id']
 
             if event_type == 'fill' or event_type == 'partial_fill':
                 # Our position size has changed
                 self.position = int(data.position_qty)
                 print(f'New position size due to order fill: {self.position}')
-                if (event_type == 'fill' and self.current_order
-                    and self.current_order.id == oid):
+                if (event_type == 'fill' and self.current_order and self.current_order.id == oid):
                     self.current_order = None
             elif event_type == 'rejected' or event_type == 'canceled':
                 if self.current_order and self.current_order.id == oid:
