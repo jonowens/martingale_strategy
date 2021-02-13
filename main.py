@@ -80,8 +80,10 @@ class MartingaleTrader(object):
         # Figure out how much money we have to work with, accounting for margin
         account_info = self.api.get_account()
         self.equity = float(account_info.equity)
-        self.margin_multiplier = float(account_info.multiplier)
-        total_buying_power = self.margin_multiplier * self.equity
+        # use this to include margin in trades
+        #self.margin_multiplier = float(account_info.multiplier)
+        #total_buying_power = self.margin_multiplier * self.equity
+        total_buying_power = self.equity
         print(f'Initial total buying power = {total_buying_power}')
 
 
@@ -179,8 +181,8 @@ class MartingaleTrader(object):
                 self.streak_count = 0
             else:
                 # Calculate the number of shares we want to be holding
-                total_buying_power = self.equity * \
-                                     self.margin_multiplier
+                total_buying_power = self.equity #* \  # commented out to not use margin
+                                     #self.margin_multiplier  # commented out to not use margin
                 target_value = (2 ** self.streak_count) * \
                                (self.base_bet / 100) * total_buying_power
                 if target_value > total_buying_power:
