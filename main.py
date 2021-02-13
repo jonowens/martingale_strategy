@@ -1,4 +1,5 @@
 # Sample Martingale Strategy via Alpaca Securities LLC
+# The initial sample code has been modified by me for further learning of algo trading
 
 # Import necessary libraries
 import alpaca_trade_api as tradeapi
